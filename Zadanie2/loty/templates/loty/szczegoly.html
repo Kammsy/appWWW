@@ -1,0 +1,37 @@
+{% extends 'loty/baza.html' %}
+
+{% block content %}
+<h1>Lot numer {{ lot.id }}</h1>
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+<ul>
+  <li>Lotnisko startu: {{lot.lotnisko_startu}}</li>
+  <li>Czas startu: {{lot.czas_startu}}</li>
+  <li>Lotnisko lądowania: {{lot.lotnisko_ladowania}}</li>
+  <li>Czas lądowania: {{lot.czas_ladowania}}</li>
+  <li>Samolot:
+    <ul>
+      <li>Identyfikator: {{lot.samolot.znaki_rejestracyjne}}</li>
+      <li>Liczba miejsc: {{lot.samolot.liczba_miejsc}}</li>
+    </ul>
+  </li>
+  <li>Lista pasażerów:
+    <ol>
+      {% for p in lot.pasazerowie.all %}
+        <li>{{p.imie}} {{p.nazwisko}}</li>
+      {% endfor %}
+    </ol>
+  </li>
+</ul>
+
+{% if request.user.is_authenticated %}
+Aby kupić bilet, wprowadź imię i nazwisko pasażera, a następnie kliknij "Kup bilet".
+<form  method="POST">
+    {% csrf_token %}
+    <input type="text" placeholder="Imię" name="imie">
+    <input type="text" placeholder="Nazwisko" name="nazwisko">
+    <input type="submit" name="zakup_biletu" value="Kup bilet">
+</form>
+{% endif %}
+{% endblock %}

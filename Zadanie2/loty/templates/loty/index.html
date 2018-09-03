@@ -1,0 +1,75 @@
+{% extends 'loty/baza.html' %}
+
+{% block content %}
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <title>Loty</title>
+
+</head>
+<body>
+
+<div class="container-fluid">
+  <header>
+    <h1>Lista lotów</h1>
+  </header>
+
+  <br>
+  <fieldset>
+      <legend>Filtrowanie na podstawie dat</legend>
+
+      <div>
+          <label for="poczatek">Od</label>
+          <input type="date" id="poczatek"
+                 value="2018-01-01"
+                 min="2018-01-01" max="2100-12-31" />
+      </div>
+
+      <div>
+          <label for="koniec">Do</label>
+          <input type="date" id="koniec"
+                 value="2018-01-01"
+                 min="2018-01-01" max="2100-12-31" />
+      </div>
+
+      <button id="filter" onclick='var input1 = document.getElementById ("poczatek"); var input2 = document.getElementById ("koniec");
+            window.location.href = "http://127.0.0.1:8000/loty/" + input1.value + "_" + input2.value;
+          '>Filtruj</button>
+  </fieldset>
+  <br>
+
+  <table id="loty_tabela" class="table table-striped table-light" style="width:100%">
+    <thead>
+      <tr>
+        <th>Numer lotu</th>
+        <th>Lotnisko startu</th>
+        <th>Czas startu</th>
+        <th>Lotnisko lądowania</th>
+        <th>Czas lądowania</th>
+        <th></th>
+      </tr>
+    </thead>
+
+    <tbody>
+    {% for l in lista_lotow %}
+      <tr>
+        <th>{{l.id}}</th>
+        <th>{{l.lotnisko_startu}}</th>
+        <th>{{l.czas_startu}}</th>
+        <th>{{l.lotnisko_ladowania}}</th>
+        <th>{{l.czas_ladowania}}</th>
+        <th><a href="{% url 'loty:szczegoly' l.id %}">Szczegóły</a></th>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+
+<hr>
+
+</body>
+</html>
+{% endblock %}

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+{% load staticfiles %}
+<head>
+  <meta charset="utf-8">
+  <title>{% block title %}Logowanie{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+  <header align="right">
+    {% if user.is_authenticated %}
+      {{ user.username }}, jesteś zalogowany. Kliknij <a href="{% url 'logout' %}">tutaj</a>, by się wylogować.
+    {% else %}
+      Nie jesteś zalogowany. Kliknij <a href="{% url 'login' %}">tutaj</a>, by się zalogować.
+    {% endif %}
+  </header>
+  <hr>
+  <main>
+    {% block content %}
+    {% endblock %}
+  </main>
+</body>
+</html>
