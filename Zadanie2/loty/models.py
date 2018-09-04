@@ -6,12 +6,11 @@ class Pasazer(models.Model):
     imie = models.CharField(max_length=42)
     nazwisko = models.CharField(max_length=42)
 
-    #class Meta:
-    #    unique_together = (('imie', 'nazwisko'),)
+    class Meta:
+       unique_together = (('imie', 'nazwisko'),)
 
 class Samolot(models.Model):
-    znaki_rejestracyjne = models.CharField(max_length=100)
-    #znaki_rejestracyjne = models.CharField(max_length=50, unique=True)
+    znaki_rejestracyjne = models.CharField(max_length=50, unique=True)
     liczba_miejsc = models.IntegerField()
 
 class Lot(models.Model):
@@ -21,6 +20,3 @@ class Lot(models.Model):
     czas_ladowania = models.DateTimeField()
     samolot = models.ForeignKey(Samolot, on_delete=models.CASCADE)
     pasazerowie = models.ManyToManyField(Pasazer)
-
-#class Bilet(models.Model):
-#    pasazer
